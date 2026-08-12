@@ -266,9 +266,3 @@ Este projeto nasceu da necessidade de organizar perguntas encontradas em process
 As perguntas podem ter sido originalmente formuladas por empresas, plataformas de recrutamento ou processos seletivos específicos. O objetivo aqui não é reproduzir um processo seletivo específico, mas organizar os conceitos e conhecimentos técnicos abordados nessas avaliações.
 
 Contribuições, correções e sugestões são bem-vindas.
-
----
-
-## Licença
-
-Este projeto pode utilizar uma licença aberta, como MIT, para permitir que a comunidade consulte, utilize e contribua com o material.
