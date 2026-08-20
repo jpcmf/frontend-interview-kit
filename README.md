@@ -1,4 +1,4 @@
-# Frontend Interview Questions
+# Frontend Interview Kit
 
 Banco de perguntas técnicas e conceituais de Front-end encontradas em processos seletivos, com respostas e breves explicações.
 
