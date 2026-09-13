@@ -22,6 +22,13 @@ O objetivo deste repositório é servir como **material de consulta e estudo**, 
 * [Observabilidade e qualidade](#observabilidade-e-qualidade)
 * [Sistemas legados](#sistemas-legados)
 * [Componentes reutilizáveis](#componentes-reutilizáveis)
+* [Responsividade e Cross-Browser](#responsividade-e-cross-browser)
+* [Inteligência Artificial](#inteligência-artificial)
+* [Angular, SOLID e arquitetura](#angular-solid-e-arquitetura)
+* [Testes e cultura de qualidade](#testes-e-cultura-de-qualidade)
+* [APIs, BFF e arquitetura distribuída](#apis-bff-e-arquitetura-distribuída)
+* [Liderança técnica e trade-offs](#liderança-técnica-e-trade-offs)
+* [Performance e Core Web Vitals](#performance-e-core-web-vitals)
 
 ---
 
@@ -229,6 +236,116 @@ A qualidade de um componente reutilizável também envolve aspectos como acessib
 
 ---
 
+## Responsividade e Cross-Browser
+
+### Conte sobre uma situação em que você desenvolveu ou manteve uma interface web que precisava ser responsiva e funcionar de forma consistente em navegadores diferentes.
+
+**Resposta:** Já trabalhei com interfaces responsivas em React, Next.js e Angular, garantindo uma experiência consistente em diferentes resoluções e navegadores. Priorizava CSS e componentes com boa compatibilidade, testava os principais cenários e, quando encontrava diferenças entre navegadores, ajustava o CSS ou o comportamento dos componentes. A componentização e o Design System também ajudavam a manter esses ajustes consistentes em toda a aplicação.
+
+### Dê um exemplo de um ajuste feito em um componente para garantir responsividade e compatibilidade cross-browser.
+
+**Resposta:** Um exemplo foi ajustar componentes que utilizavam Flexbox para diferentes larguras de tela. Em alguns cenários, o conteúdo quebrava ou causava overflow. Ajustei o comportamento usando `flex-wrap`, limites de largura e breakpoints responsivos, além de evitar propriedades CSS com suporte inconsistente. Depois validei em diferentes resoluções e navegadores.
+
+> **Observação:** este exemplo deve ser adaptado a um caso real do projeto caso o entrevistador peça detalhes específicos.
+
+---
+
+## Inteligência Artificial
+
+### Poderia descrever sua experiência prática com Inteligência Artificial? Você já trabalhou na criação de agentes autônomos ou utiliza LLMs no seu dia a dia?
+
+**Resposta:** Tenho experiência prática com IA aplicada ao desenvolvimento de software. Utilizo LLMs como Claude e GPT, além de ferramentas como GitHub Copilot, Cursor e OpenCode, para implementação, refatoração, análise de código, documentação, testes e resolução de problemas.
+
+Também exploro workflows mais agentivos com OpenCode, utilizando modelos de IA para executar tarefas de desenvolvimento de forma mais autônoma, sempre com revisão e validação humana. Ainda não tive como principal responsabilidade a criação de agentes autônomos em produção.
+
+### Conte sobre um caso concreto em que você utilizou IA Generativa no desenvolvimento.
+
+**Resposta:** Um caso concreto foi utilizar IA Generativa para acelerar a implementação de funcionalidades em uma aplicação frontend complexa. Utilizei Claude, Cursor e OpenCode para analisar o contexto do código, estruturar a solução, implementar partes da funcionalidade e revisar possíveis problemas. O principal ganho foi reduzir o tempo gasto em tarefas repetitivas e investigação, permitindo maior foco nas decisões de arquitetura e regras de negócio. O código gerado sempre passou por revisão e validação humana.
+
+### Como você garante a qualidade do código gerado por IA?
+
+**Resposta:** Trato a IA como uma ferramenta de apoio, não como autoridade sobre o código. Forneço contexto e restrições claras, reviso a implementação, executo testes, verifico impactos na arquitetura e faço os ajustes necessários antes de integrar a mudança. Também considero segurança, performance, legibilidade e aderência aos padrões do projeto.
+
+---
+
+## Angular, SOLID e arquitetura
+
+### Conte sobre uma decisão de arquitetura que você tomou em um projeto Angular usando princípios de SOLID ou Clean Architecture.
+
+**Resposta:** Em aplicações Angular, encontrei componentes concentrando muitas responsabilidades, misturando regras de negócio, estado e comunicação com APIs. Uma decisão foi separar essas responsabilidades, mantendo os componentes mais focados na apresentação e levando regras e integrações para serviços específicos.
+
+Considerei manter a estrutura existente, fazer uma refatoração pontual ou criar uma separação mais clara por responsabilidade. Optei pela última abordagem porque facilitava testes, reutilização e manutenção, seguindo principalmente os princípios de Single Responsibility e Dependency Inversion.
+
+> **Observação:** SOLID pode orientar decisões arquiteturais sem significar que o projeto necessariamente utiliza uma implementação formal de Clean Architecture.
+
+---
+
+## Testes e cultura de qualidade
+
+### Conte sobre uma situação em que você liderou ou influenciou o fortalecimento de uma cultura de testes que era limitada.
+
+**Resposta:** Em alguns projetos encontrei cenários em que a cobertura de testes ainda era limitada, principalmente em funcionalidades mais antigas. A abordagem foi começar pelos pontos mais críticos, adicionando testes unitários e de integração e incorporando essas validações ao fluxo de desenvolvimento e CI/CD.
+
+Também incentivei o time a considerar testes durante a implementação, e não apenas depois que a funcionalidade estava pronta, usando code reviews para reforçar esse padrão. A ideia era tornar os testes parte natural do processo, aumentando a confiança nas mudanças e reduzindo regressões.
+
+> **Observação:** quando não houve liderança formal do time, é mais preciso apresentar a experiência como **influência técnica** ou liderança técnica pontual.
+
+### Como você decide o que deve ser coberto por testes unitários, de integração ou E2E?
+
+**Resposta:** Começo pelo risco e pela responsabilidade da funcionalidade. Testes unitários são adequados para regras e comportamentos isolados; integração para validar a interação entre partes relevantes do sistema; e E2E para fluxos críticos do ponto de vista do usuário. Procuro manter a maior parte da cobertura em testes rápidos e usar E2E de forma mais seletiva.
+
+---
+
+## APIs, BFF e arquitetura distribuída
+
+### Você já precisou projetar ou ajustar a comunicação entre serviços em uma arquitetura distribuída, incluindo APIs RESTful?
+
+**Resposta:** Em projetos com React, Vue e Angular, trabalhei bastante na integração com APIs REST e BFFs em arquiteturas distribuídas. Um dos principais desafios era garantir contratos claros, principalmente em fluxos como autenticação, onboarding e KYC.
+
+Minha abordagem era alinhar contratos de entrada e saída, tratar estados de loading e erro, validações e mudanças de versão, além de evitar que regras específicas da API ficassem espalhadas pelos componentes. Quando necessário, centralizava a comunicação em serviços ou camadas específicas.
+
+Isso ajudava a reduzir o acoplamento entre frontend e backend e tornava as integrações mais previsíveis e fáceis de evoluir.
+
+> **Observação:** a experiência descrita é principalmente do lado do frontend e da integração com APIs/BFFs, não do desenvolvimento interno dos microsserviços de backend.
+
+### Como você lida com breaking changes em APIs consumidas por múltiplas aplicações?
+
+**Resposta:** Primeiro procuro evitar mudanças incompatíveis sem planejamento. Quando uma breaking change é necessária, alinho o contrato com os consumidores, avalio versionamento ou compatibilidade retroativa e faço a migração de forma incremental. Testes de contrato e comunicação clara entre os times também ajudam a reduzir o risco.
+
+### Qual é o papel de um BFF em uma arquitetura frontend?
+
+**Resposta:** O BFF pode adaptar os dados e contratos do backend às necessidades específicas do frontend, evitando que a aplicação cliente precise conhecer a complexidade de vários serviços. Isso pode simplificar agregação de dados, autenticação e tratamento de contratos, mas adiciona uma camada que também precisa ser mantida e observada.
+
+---
+
+## Liderança técnica e trade-offs
+
+### Como você equilibra velocidade de entrega e qualidade arquitetural?
+
+**Resposta:** Procuro avaliar o impacto e a vida útil da decisão. Para uma necessidade simples e de curto prazo, evito criar complexidade desnecessária. Quando a decisão afeta vários módulos, times ou futuras evoluções, invisto mais tempo em definir contratos, responsabilidades e uma estrutura sustentável.
+
+Também prefiro evoluir a arquitetura de forma incremental, usando refatorações e melhorias contínuas em vez de tentar resolver todos os problemas de uma vez.
+
+### Como você conduz uma decisão técnica quando existem opiniões diferentes no time?
+
+**Resposta:** Procuro tirar a discussão do campo de preferência pessoal e trazer critérios objetivos, como impacto no produto, complexidade, manutenção, performance, custo e alinhamento com os padrões existentes. Quando necessário, faço um pequeno POC ou comparação das alternativas e documento a decisão para que o time tenha clareza sobre o contexto e os trade-offs.
+
+---
+
+## Performance e Core Web Vitals
+
+### Como você investigaria um problema de LCP, CLS ou INP?
+
+**Resposta:** Primeiro identificaria qual métrica está degradada e em quais páginas, dispositivos e condições isso acontece. Depois analisaria os principais fatores envolvidos: carregamento de recursos e conteúdo para LCP, mudanças inesperadas de layout para CLS e responsividade às interações para INP.
+
+A partir dos dados, aplicaria uma otimização específica e validaria novamente o resultado, evitando otimizações baseadas apenas em percepção.
+
+### Quais estratégias você utilizaria para melhorar a performance de uma aplicação React/Next.js?
+
+**Resposta:** Dependeria do gargalo, mas consideraria code splitting e lazy loading, otimização de imagens e fontes, redução de JavaScript enviado ao cliente, cache, otimização de chamadas às APIs e renderização adequada para cada caso. Em Next.js, também avaliaria quais partes realmente precisam ser executadas no cliente e quais podem permanecer no servidor.
+
+---
+
 # Conceitos para estudar
 
 Além das questões, alguns temas aparecem repetidamente em processos seletivos de Front-end:
@@ -242,20 +359,40 @@ Além das questões, alguns temas aparecem repetidamente em processos seletivos 
 * Server State
 * TanStack Query
 * REST APIs
+* API Contracts
+* API Versioning
 * BFF
 * TypeScript
 * Design Patterns
 * SOLID
 * Clean Code
 * Testes automatizados
+* Unit Testing
+* Integration Testing
+* E2E Testing
 * Acessibilidade
 * Observabilidade
 * Performance
+* Core Web Vitals
+* LCP
+* CLS
+* INP
+* Responsive Design
+* Cross-Browser Compatibility
 * Lazy Loading
 * Code Splitting
 * Arquitetura modular
 * Sistemas legados
 * Strangler Fig Pattern
+* Generative AI
+* LLMs
+* AI-assisted development
+* AI agents / agentic workflows
+* Cursor
+* Claude
+* OpenCode
+* Technical Leadership
+* Architectural Trade-offs
 
 ---
 
