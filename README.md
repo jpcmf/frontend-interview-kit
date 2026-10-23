@@ -38,6 +38,7 @@ entrevistas técnicas e processos seletivos.
 -   [APIs, BFF e arquitetura distribuída](#apis-bff-e-arquitetura-distribuída)
 -   [Git](#git)
 -   [Liderança técnica e trade-offs](#liderança-técnica-e-trade-offs)
+-   [Experiência prática e resolução de problemas](#experiência-prática-e-resolução-de-problemas)
 -   [Performance e Core Web Vitals](#performance-e-core-web-vitals)
 -   [Conceitos para estudar](#conceitos-para-estudar)
 
@@ -214,6 +215,13 @@ validação, análise de dados e melhoria do produto.
 
 **Resposta:** Buscar os dados → modelar/tratar os estados → utilizar uma
 solução de cache quando necessário.
+
+Procuro separar o estado da interface dos dados vindos do servidor. Para
+estados locais, como modais e filtros, mantenho o estado próximo dos
+componentes que o utilizam. Quando vários componentes precisam compartilhar
+informações, avalio Context ou uma solução global. Para dados de APIs,
+considero loading, erros, cache e atualização, evitando duplicar a mesma
+informação em diferentes estados sem necessidade.
 
 > **Observação:** uma solução de cache não é obrigatória em todos os
 > casos. Bibliotecas como TanStack Query são especialmente úteis para
@@ -1008,6 +1016,162 @@ trade-offs.
 
 ------------------------------------------------------------------------
 
+## Experiência prática e resolução de problemas
+
+Esta seção reúne perguntas abertas comuns em entrevistas para posições
+sênior. As respostas seguem um formato objetivo, adequado para estudo e
+para respostas faladas.
+
+> **Nota:** adapte os exemplos comportamentais aos detalhes que você
+> realmente vivenciou. Em entrevistas, esteja preparado para explicar o
+> contexto, as decisões tomadas e os resultados. Diferencie o que você
+> fez diretamente daquilo em que apenas participou.
+
+### Conte sobre um projeto desafiador e como você transformou os requisitos de negócio em uma solução técnica.
+
+**Resposta:** Um projeto desafiador foi a migração e reestruturação de
+aplicações na Pagar.me durante a integração com a Stone. Era importante
+modernizar as aplicações e manter a consistência entre diferentes
+produtos. Trabalhei em um monorepo com Nx, utilizando React, Next.js e
+Vue.js, além de microfrontends e componentes distribuídos como pacotes
+reutilizáveis. Essa abordagem ajudou a modularizar a solução e permitiu
+que diferentes partes do produto evoluíssem com mais independência.
+
+### Como você investiga um problema que acontece apenas em produção?
+
+**Resposta:** Começo comparando o comportamento entre os ambientes e
+analisando o console do navegador, as requisições de rede, os logs e as
+configurações envolvidas. Também verifico dependências externas, variáveis
+de ambiente e diferenças no processo de inicialização da aplicação. Em um
+fluxo de onboarding que envolvia um script de consentimento de terceiros,
+por exemplo, era necessário investigar a interação entre o script e a
+aplicação para entender o comportamento observado. A prioridade é
+identificar a causa antes de aplicar uma correção e validar o resultado
+no ambiente afetado.
+
+### O que você faz quando não consegue reproduzir um bug relatado por usuários?
+
+**Resposta:** Registro as condições em que o problema acontece e procuro
+coletar informações úteis, como navegador, versão da aplicação, horário,
+etapas realizadas e mensagens de erro. Analiso logs, eventos e requisições
+relacionados ao fluxo e tento identificar padrões. Se necessário, adiciono
+instrumentação para coletar mais evidências sem expor dados sensíveis.
+Depois de encontrar a causa, valido a correção e adiciono um teste ou uma
+verificação que ajude a evitar a recorrência.
+
+### Como você utiliza TypeScript em aplicações de produção?
+
+**Resposta:** Utilizo TypeScript principalmente com React, Next.js,
+Vue.js e Angular. Além de tipar propriedades e funções, procuro definir
+contratos claros para APIs, reutilizar tipos e generics quando fazem
+sentido e representar estados distintos de maneira segura. Em aplicações
+com múltiplos módulos, também considero a compatibilidade entre os
+contratos compartilhados. O objetivo é detectar erros mais cedo,
+facilitar a manutenção e tornar as mudanças mais seguras.
+
+### Como você modela contratos de API para reduzir erros no frontend?
+
+**Resposta:** Começo identificando os formatos de entrada e saída e os
+campos realmente obrigatórios ou opcionais. Represento esses contratos
+com tipos ou interfaces e procuro manter as definições alinhadas com o
+comportamento real da API. Também trato dados externos como algo que
+precisa ser validado, porque os tipos do TypeScript não validam
+automaticamente a resposta em tempo de execução. Quando há mudanças de
+contrato, considero os impactos nos consumidores e adiciono testes para
+os cenários relevantes.
+
+### Como você investigaria um problema intermitente de dados desatualizados?
+
+**Resposta:** Primeiro, tento reproduzir o problema e identificar se a
+origem está no frontend, na API ou em alguma camada de cache. Inspeciono
+as requisições, as respostas e os tempos de execução, além de verificar
+possíveis condições de corrida entre chamadas assíncronas. Também analiso
+logs e ferramentas de observabilidade para correlacionar os eventos.
+Depois de identificar a causa, ajusto a estratégia de cache ou
+sincronização e adiciono testes para evitar regressões.
+
+### Como você avalia se uma funcionalidade deve ser compartilhada entre aplicações ou permanecer específica de um produto?
+
+**Resposta:** Avalio se existe uma necessidade real de reutilização e se
+os casos de uso são suficientemente parecidos. Também considero o custo
+de manter uma abstração, a quantidade de configurações necessárias, o
+acoplamento e o impacto de mudanças futuras. Se a solução compartilhada
+ficar complexa demais para atender cenários diferentes, pode ser melhor
+manter implementações específicas. Quando a decisão não está clara, uma
+prova de conceito ajuda a comparar as alternativas antes de consolidar a
+arquitetura.
+
+### Como você trabalha com microfrontends sem aumentar excessivamente o acoplamento?
+
+**Resposta:** Procuro definir limites claros entre os módulos, com
+responsabilidades e contratos de integração bem estabelecidos.
+Compartilho componentes e dependências quando existe benefício real,
+evitando transformar a comunicação entre aplicações em uma dependência
+excessiva. Também considero versionamento, compatibilidade, observabilidade
+e formas de testar cada módulo de maneira independente. O objetivo é
+permitir evolução autônoma sem perder consistência na experiência do
+produto.
+
+### Como você toma uma decisão técnica quando há pressão para entregar rapidamente?
+
+**Resposta:** Primeiro, procuro separar o que é essencial para entregar
+valor do que pode ser feito em uma etapa posterior. Avalio os riscos de
+cada alternativa, principalmente em relação a segurança, estabilidade e
+manutenção. Se for necessário adotar uma solução temporária, deixo as
+limitações claras e registro o que precisa ser revisitado. Assim, a
+decisão considera a urgência sem ignorar os custos que podem aparecer
+depois.
+
+### Como você contribui tecnicamente sem assumir uma posição formal de gestão?
+
+**Resposta:** Procuro contribuir por meio de decisões de arquitetura,
+revisões de código, documentação e compartilhamento de conhecimento.
+Também ajudo a tornar os problemas mais claros, avaliar alternativas e
+alinhar critérios técnicos com as necessidades do produto. Para mim,
+liderança técnica é ampliar a capacidade do time de tomar boas decisões,
+e não necessariamente gerenciar pessoas.
+
+### Como você desenvolve formulários complexos e interfaces com muitos dados?
+
+**Resposta:** Começo entendendo as regras de negócio e os fluxos do
+usuário. Organizo os formulários em componentes com responsabilidades
+claras, separo as validações da interface das validações do servidor e
+trato estados de carregamento, erros e envio. Em interfaces com muitos
+dados, também considero paginação, filtros e performance de renderização.
+Para acessibilidade, priorizo HTML semântico, labels, mensagens de erro
+claras, navegação por teclado e gerenciamento adequado do foco.
+
+### Como você garante acessibilidade em componentes reutilizáveis?
+
+**Resposta:** Procuro incorporar acessibilidade desde o desenho do
+componente, usando HTML semântico, suporte a teclado, foco visível e
+nomes acessíveis. Utilizo atributos ARIA quando necessário, sem substituir
+elementos semânticos por estruturas genéricas. Também valido estados como
+erro, desabilitado e carregamento, e testo os principais fluxos com
+teclado e ferramentas de acessibilidade. Quando os componentes fazem
+parte de um Design System, documentar esses comportamentos ajuda a manter
+a consistência entre aplicações.
+
+### Como você valida que uma mudança resolveu o problema sem introduzir regressões?
+
+**Resposta:** Começo definindo o comportamento esperado e os cenários que
+precisam ser cobertos. Escolho testes unitários, de integração ou
+end-to-end conforme o risco e o escopo da mudança. Também valido os
+fluxos relevantes manualmente quando necessário e acompanho logs ou
+métricas após a publicação. Sempre que possível, comparo o comportamento
+antes e depois para confirmar que a solução resolveu o problema original.
+
+### Como você utiliza ferramentas de IA no desenvolvimento sem abrir mão da qualidade?
+
+**Resposta:** Utilizo ferramentas como Claude, GPT, GitHub Copilot,
+Cursor e OpenCode para apoiar análise de código, implementação,
+refatoração, documentação e testes. Procuro fornecer contexto claro,
+dividir tarefas complexas em etapas e revisar o resultado em vez de
+aceitar código automaticamente. Valido a solução com testes, análise dos
+requisitos e revisão das decisões técnicas. Para mim, a IA acelera o
+trabalho, mas a responsabilidade pela qualidade e pelo comportamento
+final continua sendo do desenvolvedor.
+
 ## Performance e Core Web Vitals
 
 ### Como você investigaria um problema de LCP, CLS ou INP?
@@ -1024,13 +1188,15 @@ percepção.
 
 ### Quais estratégias você utilizaria para melhorar a performance de uma aplicação React/Next.js?
 
-**Resposta:** Dependeria do gargalo, mas consideraria code splitting e
-lazy loading, otimização de imagens e fontes, redução de JavaScript
-enviado ao cliente, cache, otimização de chamadas às APIs e renderização
-adequada para cada caso.
-
-Em Next.js, também avaliaria quais partes realmente precisam ser
-executadas no cliente e quais podem permanecer no servidor.
+**Resposta:** Primeiro identificaria o gargalo com ferramentas como
+React DevTools Profiler e Lighthouse, evitando otimizar por suposição.
+Depois, analisaria re-renderizações, tamanho do bundle, carregamento de
+recursos e chamadas à API. Dependendo do problema, consideraria code
+splitting, lazy loading, virtualização, otimização de imagens e fontes,
+cache ou memoização quando as medições justificarem. Em Next.js, também
+avaliaria quais partes precisam ser executadas no cliente e quais podem
+permanecer no servidor. Por fim, compararia as métricas antes e depois
+para confirmar o resultado.
 
 ------------------------------------------------------------------------
 
@@ -1099,6 +1265,16 @@ seletivos de Front-end:
 -   OpenCode
 -   Technical Leadership
 -   Architectural Trade-offs
+-   React DevTools Profiler
+-   TypeScript Generics
+-   Runtime Validation
+-   Race Conditions
+-   Debugging em produção
+-   API Contracts
+-   Technical Decision Making
+-   Form Validation
+-   Accessible Components
+-   AI-assisted Development Workflows
 
 ------------------------------------------------------------------------
 
